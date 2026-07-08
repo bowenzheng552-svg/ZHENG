@@ -10,7 +10,7 @@ const tabs = [
     company: "欢聚集团(Hago)",
     period: "2026.01 - 2026.03",
     role: "产品经理实习",
-    image: "/images/experience-2.jpg",
+    image: "./images/experience-2.jpg",
     icon: Building,
     highlights: [
       "EZPZ房间等级体系制定：为PUGC搭建基础条件，激励引导房主搭建高质量语音房",
@@ -22,7 +22,7 @@ const tabs = [
     company: "百度YY直播",
     period: "2026.01 - 2026.03",
     role: "产品经理实习",
-    image: "/images/experience-1.jpg",
+    image: "./images/experience-1.jpg",
     icon: Building,
     highlights: [
       "负责海外市场调研 & 语音房产品美妆栏插件优化，协助生态支撑部开展YY开播产品海外市场调研",
@@ -37,7 +37,7 @@ const tabs = [
     company: "央广云听",
     period: "2025.10 - 至今",
     role: "PUGC认证主播",
-    image: "/images/experience-3.jpg",
+    image: "./images/experience-3.jpg",
     icon: Radio,
     highlights: [
       "负责各类题材文艺小说有声书干音录制，个人专辑上架主页和开屏",
@@ -51,7 +51,7 @@ const tabs = [
     company: "汕头电视台",
     period: "2025.07 - 2025.08",
     role: "实习记者",
-    image: "/images/experience-4.jpg",
+    image: "./images/experience-4.jpg",
     icon: Tv,
     highlights: [
       "于融媒体《今日视线》节目组担任见习记者",
