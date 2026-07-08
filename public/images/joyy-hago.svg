@@ -1,0 +1,87 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#11071f"/>
+      <stop offset="50%" stop-color="#1a0a30"/>
+      <stop offset="100%" stop-color="#2d0d4a"/>
+    </linearGradient>
+    <linearGradient id="bldg1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a1a7a"/>
+      <stop offset="100%" stop-color="#2a0d4a"/>
+    </linearGradient>
+    <linearGradient id="bldg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6c2bd9"/>
+      <stop offset="100%" stop-color="#3d1a7a"/>
+    </linearGradient>
+    <linearGradient id="bldg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8e44ad"/>
+      <stop offset="100%" stop-color="#5b2c6f"/>
+    </linearGradient>
+    <linearGradient id="highlightR" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8e44ad" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#d282ff" stop-opacity="0.35"/>
+    </linearGradient>
+    <linearGradient id="glowRight" x1="0.5" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9b59b6" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#bb8fce" stop-opacity="0.15"/>
+    </linearGradient>
+    <filter id="g">
+      <feGaussianBlur stdDeviation="2"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="600" fill="url(#sky)"/>
+  <!-- Particles -->
+  <circle cx="150" cy="80" r="2" fill="#d282ff" opacity="0.4"/>
+  <circle cx="300" cy="50" r="1.5" fill="#bb8fce" opacity="0.3"/>
+  <circle cx="450" cy="100" r="1" fill="#d282ff" opacity="0.35"/>
+  <circle cx="600" cy="60" r="2" fill="#bb8fce" opacity="0.3"/>
+  <circle cx="750" cy="90" r="1.5" fill="#d282ff" opacity="0.4"/>
+  <circle cx="900" cy="45" r="1" fill="#bb8fce" opacity="0.25"/>
+  <circle cx="1080" cy="70" r="2" fill="#d282ff" opacity="0.35"/>
+  <!-- Social network nodes right side -->
+  <circle cx="950" cy="200" r="60" fill="none" stroke="#8e44ad" stroke-width="0.5" opacity="0.15"/>
+  <circle cx="1050" cy="250" r="40" fill="none" stroke="#9b59b6" stroke-width="0.5" opacity="0.12"/>
+  <circle cx="900" cy="320" r="30" fill="none" stroke="#af7ac5" stroke-width="0.5" opacity="0.1"/>
+  <line x1="950" y1="200" x2="1050" y2="250" stroke="#bb8fce" stroke-width="0.5" opacity="0.08"/>
+  <line x1="950" y1="200" x2="900" y2="320" stroke="#bb8fce" stroke-width="0.5" opacity="0.08"/>
+  <line x1="1050" y1="250" x2="900" y2="320" stroke="#bb8fce" stroke-width="0.5" opacity="0.08"/>
+  <circle cx="950" cy="200" r="8" fill="#d282ff" opacity="0.2"/>
+  <circle cx="1050" cy="250" r="5" fill="#bb8fce" opacity="0.18"/>
+  <circle cx="900" cy="320" r="4" fill="#af7ac5" opacity="0.15"/>
+  <!-- Buildings center -->
+  <rect x="380" y="240" width="65" height="360" fill="url(#bldg1)" rx="3"/>
+  <rect x="390" y="250" width="16" height="22" fill="#d282ff" opacity="0.25" rx="1"/>
+  <rect x="415" y="255" width="16" height="17" fill="#bb8fce" opacity="0.2" rx="1"/>
+  <rect x="390" y="285" width="16" height="22" fill="#d282ff" opacity="0.25" rx="1"/>
+  <rect x="415" y="290" width="16" height="17" fill="#bb8fce" opacity="0.2" rx="1"/>
+  <rect x="390" y="320" width="16" height="22" fill="#d282ff" opacity="0.25" rx="1"/>
+  <rect x="415" y="325" width="16" height="17" fill="#bb8fce" opacity="0.2" rx="1"/>
+  <rect x="390" y="355" width="16" height="22" fill="#d282ff" opacity="0.25" rx="1"/>
+  <rect x="415" y="360" width="16" height="17" fill="#bb8fce" opacity="0.2" rx="1"/>
+  <!-- Main building -->
+  <rect x="460" y="190" width="75" height="410" fill="url(#bldg2)" rx="3"/>
+  <rect x="470" y="200" width="18" height="24" fill="#d282ff" opacity="0.3" rx="1"/>
+  <rect x="500" y="205" width="18" height="19" fill="#bb8fce" opacity="0.25" rx="1"/>
+  <rect x="470" y="238" width="18" height="24" fill="#d282ff" opacity="0.3" rx="1"/>
+  <rect x="500" y="243" width="18" height="19" fill="#bb8fce" opacity="0.25" rx="1"/>
+  <rect x="470" y="278" width="18" height="24" fill="#d282ff" opacity="0.3" rx="1"/>
+  <rect x="500" y="283" width="18" height="19" fill="#bb8fce" opacity="0.25" rx="1"/>
+  <rect x="470" y="318" width="18" height="24" fill="#d282ff" opacity="0.3" rx="1"/>
+  <rect x="500" y="323" width="18" height="19" fill="#bb8fce" opacity="0.25" rx="1"/>
+  <rect x="470" y="358" width="18" height="24" fill="#d282ff" opacity="0.3" rx="1"/>
+  <rect x="500" y="363" width="18" height="19" fill="#bb8fce" opacity="0.25" rx="1"/>
+  <rect x="470" y="398" width="18" height="24" fill="#d282ff" opacity="0.3" rx="1"/>
+  <rect x="500" y="403" width="18" height="19" fill="#bb8fce" opacity="0.25" rx="1"/>
+  <!-- Right building -->
+  <rect x="550" y="280" width="55" height="320" fill="url(#bldg3)" rx="2"/>
+  <rect x="558" y="290" width="14" height="20" fill="#d282ff" opacity="0.2" rx="1"/>
+  <rect x="580" y="295" width="14" height="15" fill="#bb8fce" opacity="0.18" rx="1"/>
+  <rect x="558" y="325" width="14" height="20" fill="#d282ff" opacity="0.2" rx="1"/>
+  <rect x="580" y="330" width="14" height="15" fill="#bb8fce" opacity="0.18" rx="1"/>
+  <!-- Hago purple glow right -->
+  <rect x="850" y="150" width="350" height="450" fill="url(#glowRight)"/>
+  <!-- Ground -->
+  <rect x="0" y="560" width="1200" height="40" fill="#0d0218" opacity="0.6"/>
+  <!-- Abstract H -->
+  <path d="M1020 170 L1020 210 M1040 170 L1040 210 M1020 190 L1040 190" stroke="#d282ff" stroke-width="2" opacity="0.12" fill="none"/>
+</svg>

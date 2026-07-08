@@ -1,0 +1,76 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a1218"/>
+      <stop offset="40%" stop-color="#102230"/>
+      <stop offset="100%" stop-color="#1a3d50"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a3d50" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0d2530" stop-opacity="0.6"/>
+    </linearGradient>
+    <linearGradient id="build1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2c5f7a"/>
+      <stop offset="100%" stop-color="#1a3d50"/>
+    </linearGradient>
+    <linearGradient id="build2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a7a9a"/>
+      <stop offset="100%" stop-color="#1f4a60"/>
+    </linearGradient>
+    <linearGradient id="build3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a90a0"/>
+      <stop offset="100%" stop-color="#2a5a6a"/>
+    </linearGradient>
+    <linearGradient id="glowR2" x1="0.5" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5dade2" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#85c1e9" stop-opacity="0.12"/>
+    </linearGradient>
+    <linearGradient id="highlightR2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#5dade2" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#aed6f1" stop-opacity="0.35"/>
+    </linearGradient>
+    <filter id="sg2"><feGaussianBlur stdDeviation="2"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1200" height="600" fill="url(#sky)"/>
+  <!-- Coastline right side -->
+  <path d="M700 480 Q740 460 780 475 Q820 490 860 470 Q900 450 940 465 Q980 480 1020 460 L1200 460 L1200 600 L700 600 Z" fill="url(#sea)"/>
+  <!-- Sea waves -->
+  <path d="M700 490 Q740 480 780 488 Q820 496 860 484 Q900 472 940 482 Q980 492 1020 478 L1200 478" fill="none" stroke="#5dade2" stroke-width="0.5" opacity="0.08"/>
+  <!-- Buildings center-right -->
+  <rect x="450" y="270" width="55" height="290" fill="url(#build1)" rx="2"/>
+  <rect x="458" y="280" width="13" height="20" fill="#aed6f1" opacity="0.2" rx="1"/>
+  <rect x="478" y="285" width="13" height="15" fill="#85c1e9" opacity="0.18" rx="1"/>
+  <rect x="458" y="312" width="13" height="20" fill="#aed6f1" opacity="0.2" rx="1"/>
+  <rect x="478" y="317" width="13" height="15" fill="#85c1e9" opacity="0.18" rx="1"/>
+  <rect x="458" y="344" width="13" height="20" fill="#aed6f1" opacity="0.2" rx="1"/>
+  <rect x="478" y="349" width="13" height="15" fill="#85c1e9" opacity="0.18" rx="1"/>
+  <!-- TV station main -->
+  <rect x="520" y="220" width="65" height="340" fill="url(#build2)" rx="2"/>
+  <rect x="528" y="230" width="16" height="22" fill="#aed6f1" opacity="0.25" rx="1"/>
+  <rect x="554" y="235" width="16" height="17" fill="#85c1e9" opacity="0.2" rx="1"/>
+  <rect x="528" y="265" width="16" height="22" fill="#aed6f1" opacity="0.25" rx="1"/>
+  <rect x="554" y="270" width="16" height="17" fill="#85c1e9" opacity="0.2" rx="1"/>
+  <rect x="528" y="300" width="16" height="22" fill="#aed6f1" opacity="0.25" rx="1"/>
+  <rect x="554" y="305" width="16" height="17" fill="#85c1e9" opacity="0.2" rx="1"/>
+  <rect x="528" y="335" width="16" height="22" fill="#aed6f1" opacity="0.25" rx="1"/>
+  <rect x="554" y="340" width="16" height="17" fill="#85c1e9" opacity="0.2" rx="1"/>
+  <rect x="528" y="370" width="16" height="22" fill="#aed6f1" opacity="0.25" rx="1"/>
+  <rect x="554" y="375" width="16" height="17" fill="#85c1e9" opacity="0.2" rx="1"/>
+  <!-- Antenna on top -->
+  <rect x="550" y="200" width="4" height="20" fill="#aed6f1" opacity="0.15" rx="1"/>
+  <rect x="540" y="200" width="24" height="3" fill="#aed6f1" opacity="0.12"/>
+  <!-- Right building -->
+  <rect x="600" y="310" width="50" height="210" fill="url(#build3)" rx="2"/>
+  <rect x="608" y="320" width="12" height="18" fill="#aed6f1" opacity="0.18" rx="1"/>
+  <rect x="628" y="325" width="12" height="13" fill="#85c1e9" opacity="0.15" rx="1"/>
+  <rect x="608" y="350" width="12" height="18" fill="#aed6f1" opacity="0.18" rx="1"/>
+  <rect x="628" y="355" width="12" height="13" fill="#85c1e9" opacity="0.15" rx="1"/>
+  <!-- Right glow -->
+  <rect x="800" y="100" width="400" height="500" fill="url(#glowR2)"/>
+  <!-- TV signal lines -->
+  <rect x="1060" y="140" width="1" height="320" fill="#5dade2" opacity="0.04"/>
+  <rect x="1080" y="120" width="1" height="340" fill="#5dade2" opacity="0.03"/>
+  <rect x="1100" y="100" width="1" height="380" fill="#5dade2" opacity="0.03"/>
+  <!-- Ground -->
+  <rect x="0" y="558" width="1200" height="42" fill="#080e12" opacity="0.6"/>
+</svg>
