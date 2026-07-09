@@ -3,6 +3,7 @@ import AnimatedLetter from "./AnimatedLetter";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Mic, Award, BookOpen, Volume2 } from "lucide-react";
+import GradientBlinds from "./GradientBlinds";
 
 const stats = [
   { icon: Mic, value: "60+", label: "活动主持" },
@@ -44,8 +45,28 @@ export default function About() {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="glass-panel rounded-2xl md:rounded-[2rem] max-w-6xl mx-auto px-6 md:px-16 lg:px-24 py-20 md:py-28 text-center relative overflow-hidden">
+        {/* GradientBlinds animated background */}
+        <div className="absolute inset-0 z-0">
+          <GradientBlinds
+            gradientColors={['#8B7355', '#DEDBC8', '#C4A862', '#B8A070', '#A08050']}
+            angle={0}
+            noise={0.15}
+            blindCount={28}
+            blindMinWidth={30}
+            spotlightRadius={0.35}
+            spotlightSoftness={1.8}
+            spotlightOpacity={0.5}
+            mouseDampening={0.2}
+            shineDirection="left"
+            mixBlendMode="overlay"
+          />
+        </div>
+
+        {/* Subtle dark overlay to ensure text readability */}
+        <div className="absolute inset-0 bg-black/40 z-[1] pointer-events-none" />
+
         {/* Subtle noise */}
-        <div className="absolute inset-0 bg-noise opacity-[0.06] pointer-events-none" />
+        <div className="absolute inset-0 bg-noise opacity-[0.08] z-[2] pointer-events-none" />
 
         <motion.div
           className="relative z-10"
@@ -60,7 +81,7 @@ export default function About() {
           </p>
 
           {/* Heading */}
-          <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl max-w-4xl mx-auto leading-[0.95] sm:leading-[0.9] mb-10 md:mb-14 text-white">
+          <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl max-w-4xl mx-auto leading-[0.95] sm:leading-[0.9] mb-10 md:mb-14">
             <WordsPullUpMultiStyle segments={headingSegments} />
           </div>
 
