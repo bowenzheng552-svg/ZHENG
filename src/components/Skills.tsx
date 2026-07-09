@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+﻿import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Monitor, Layers, Mic, Award } from "lucide-react";
 import { ChevronDown } from "lucide-react";
@@ -9,7 +9,7 @@ const skillCategories = [
     icon: Monitor,
     color: "from-sky-400 to-violet-400",
     hexColor: "#38bdf8",
-    items: ["剪映", "PowerPoint", "创可贴", "Canvas", "WPS", "AU", "幕客", "Draw.io", "ID", "Midjourney", "Codex", "Coding"],
+    items: ["剪辑", "PowerPoint", "创可贴", "Canvas", "WPS", "AU", "幕客", "Draw.io", "ID", "Midjourney", "Codex", "Coding"],
   },
   {
     title: "产品能力",
@@ -34,10 +34,15 @@ const skillCategories = [
   },
 ];
 
+// Spring constants
+const ballSpringIn = { type: "spring" as const, stiffness: 400, damping: 18, mass: 0.6 };
+const ballSpringHover = { type: "spring" as const, stiffness: 500, damping: 15 };
+const expandSpring = { type: "spring" as const, stiffness: 300, damping: 24, mass: 0.9 };
+
 function BallGlow({ color }: { color: string }) {
   return (
     <div
-      className="absolute inset-0 rounded-full opacity-30 blur-xl animate-pulse-slow"
+      className="absolute inset-0 rounded-full opacity-30 blur-xl animate-pulse-glow"
       style={{
         background: `radial-gradient(circle, ${color}33 0%, transparent 70%)`,
         transform: "scale(1.3)",
@@ -52,7 +57,6 @@ export default function Skills() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const ballRefs = useRef<(HTMLDivElement | null)[]>([null, null, null, null]);
-  const mousePos = useRef<{ x: number; y: number; el: HTMLDivElement | null }>({ x: 0, y: 0, el: null });
 
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -115,7 +119,7 @@ export default function Skills() {
                 className="flex flex-col items-center"
                 initial={{ y: 50, opacity: 0, scale: 0.85 }}
                 animate={isInView ? { y: 0, opacity: 1 } : {}}
-                transition={{ duration: 0.7, delay: 0.1 + index * 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+                transition={{ ...ballSpringIn, delay: 0.1 + index * 0.15 }}
               >
                 {/* Ball container with floating animation */}
                 <motion.div
@@ -163,8 +167,9 @@ export default function Skills() {
                       handleMouseLeave(index);
                     }}
                     onClick={() => toggleExpand(index)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.97 }}
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={ballSpringHover}
                   >
                     {/* Shimmer overlay on hover */}
                     {isHovered && (
@@ -172,9 +177,9 @@ export default function Skills() {
                         className="absolute inset-0 rounded-full overflow-hidden pointer-events-none"
                         initial={{ x: "-100%" }}
                         animate={{ x: "100%" }}
-                        transition={{ duration: 0.8, ease: "easeInOut" }}
+                        transition={{ duration: 0.6, ease: "easeInOut" }}
                         style={{
-                          background: "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%)",
+                          background: "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%)",
                         }}
                       />
                     )}
@@ -189,10 +194,10 @@ export default function Skills() {
                     {isExpanded && (
                       <motion.div
                         className="absolute -inset-[3px] rounded-full border-2"
-                        style={{ borderColor: `${cat.hexColor}66` }}
+                        style={{ borderColor: `${cat.hexColor}88` }}
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 15 }}
                       />
                     )}
                   </motion.div>
@@ -201,17 +206,15 @@ export default function Skills() {
                 {/* Arrow button */}
                 <motion.button
                   onClick={() => toggleExpand(index)}
-                  className="mt-3 sm:mt-4 w-8 h-8 rounded-full flex items-center justify-center bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] transition-colors duration-200"
-                  whileHover={{ scale: 1.15 }}
+                  className="mt-3 sm:mt-4 w-8 h-8 rounded-full flex items-center justify-center glass-card interactive-cursor"
+                  whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
                   animate={isInView ? {
                     y: [0, -3, 0],
                   } : {}}
                   transition={{
-                    duration: 3,
-                    delay: floatDelay + 0.3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
+                    type: "spring", stiffness: 500, damping: 20,
+                    y: { type: "tween", duration: 3, delay: floatDelay + 0.3, repeat: Infinity, ease: "easeInOut" }
                   }}
                 >
                   <ChevronDown
@@ -221,14 +224,14 @@ export default function Skills() {
                   />
                 </motion.button>
 
-                {/* Expandable sub-skills */}
+                {/* Expandable sub-skills — Glassmorphism card with spring */}
                 <motion.div
                   className="w-full overflow-hidden mt-2"
                   initial={false}
                   animate={{ height: isExpanded ? 'auto' : 0, opacity: isExpanded ? 1 : 0 }}
-                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  transition={expandSpring}
                 >
-                  <div className="bg-[#101010] rounded-xl p-3 sm:p-4 border border-white/[0.05]">
+                  <div className="glass-card rounded-xl p-3 sm:p-4">
                     <div className="space-y-1.5">
                       {cat.items.map((item, i) => (
                         <motion.div
@@ -237,9 +240,10 @@ export default function Skills() {
                           initial={{ x: -8, opacity: 0 }}
                           animate={isExpanded ? { x: 0, opacity: 1 } : {}}
                           transition={{
-                            duration: 0.25,
-                            delay: isExpanded ? i * 0.04 : 0,
-                            ease: [0.16, 1, 0.3, 1],
+                            type: "spring",
+                            stiffness: 250,
+                            damping: 20,
+                            delay: isExpanded ? i * 0.035 : 0,
                           }}
                         >
                           <span className={`w-1.5 h-1.5 rounded-full shrink-0 bg-gradient-to-br ${cat.color} opacity-60`} />
@@ -257,3 +261,4 @@ export default function Skills() {
     </motion.section>
   );
 }
+

@@ -1,6 +1,6 @@
 ﻿import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Building, Radio, Tv, ArrowLeft, ArrowRight } from "lucide-react";
+import { Building, Radio, Tv } from "lucide-react";
 import WordsPullUpMultiStyle from "./WordsPullUpMultiStyle";
 import Stepper, { Step } from "./Stepper";
 
@@ -81,8 +81,8 @@ function StepContent({ item }: { item: typeof tabs[0] }) {
         />
       </div>
 
-      {/* Content overlay */}
-      <div className="relative z-10 glass-light rounded-2xl p-6 sm:p-8 md:p-10">
+      {/* Content overlay — Glassmorphism card */}
+      <div className="relative z-10 glass-card rounded-2xl p-6 sm:p-8 md:p-10">
         {/* Header */}
         <div className="flex items-start justify-between mb-6 pb-6 border-b border-white/5">
           <div>
@@ -100,7 +100,7 @@ function StepContent({ item }: { item: typeof tabs[0] }) {
               key={i}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ type: "spring", stiffness: 300, damping: 20, delay: i * 0.05 }}
               className="flex items-start gap-3"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-white/30 mt-2 shrink-0" />
@@ -121,6 +121,7 @@ export default function Experience() {
   const headerSegments = [{ text: "工作经历与项目实践", className: "" }];
   const subHeaderSegments = [{ text: "产品 · 媒体 · 内容 跨领域实践者", className: "text-white/50" }];
 
+
   return (
     <section id="experience" ref={sectionRef} className="min-h-screen bg-black relative py-24 md:py-32 px-4 md:px-8 overflow-hidden">
       <div className="absolute inset-0 bg-noise opacity-[0.1] pointer-events-none" />
@@ -137,7 +138,7 @@ export default function Experience() {
           </div>
         </div>
 
-        {/* Tab Bar */}
+        {/* Tab Bar — Glassmorphism tabs */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={isInView ? { y: 0, opacity: 1 } : {}}
@@ -149,36 +150,41 @@ export default function Experience() {
             const isActive = activeTab === idx;
             const Icon = tab.icon;
             return (
-              <button
+              <motion.button
                 key={tab.id}
                 onClick={() => setActiveTab(idx)}
-                className={`relative flex items-center gap-2 sm:gap-3 px-4 py-3 sm:px-6 sm:py-4 rounded-xl whitespace-nowrap flex-shrink-0 transition-all duration-400 ${
-                  isActive
-                    ? "glass-active text-white"
-                    : "glass-light text-white/50 hover:text-white/80"
+                className={`relative flex items-center gap-2 sm:gap-3 px-4 py-3 sm:px-6 sm:py-4 rounded-xl whitespace-nowrap flex-shrink-0 interactive-cursor ${
+                  isActive ? "glass-tab-active" : "glass-tab"
                 }`}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 500, damping: 20 }}
               >
                 <Icon size={16} className="shrink-0" />
-                <span className="text-xs sm:text-sm font-medium">{tab.company}</span>
-                <span className="hidden sm:inline text-[10px] text-white/30">{tab.period}</span>
+                <span className="text-xs sm:text-sm font-medium" style={{ color: isActive ? "#fff" : "rgba(255,255,255,0.5)" }}>{tab.company}</span>
                 {isActive && (
                   <motion.div
                     layoutId="tab-indicator"
                     className="absolute inset-0 rounded-xl border border-white/20"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 28 }}
                   />
                 )}
-              </button>
+              </motion.button>
             );
           })}
         </motion.div>
 
-        {/* Stepper: replaces the old AnimatePresence content */}
-        <div className="glass-light rounded-2xl overflow-hidden">
+        {/* Stepper with Glassmorphism wrapper */}
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 22 }}
+          className="glass-panel rounded-2xl overflow-hidden"
+        >
           <Stepper
-            key={activeTab}
             initialStep={activeTab + 1}
-            onStepChange={(step) => setActiveTab(step - 1)}
+            onStepChange={(step: number) => setActiveTab(step - 1)}
             backButtonText="上一个"
             nextButtonText="下一个"
             disableStepIndicators={false}
@@ -189,8 +195,11 @@ export default function Experience() {
               </Step>
             ))}
           </Stepper>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
+
+
+

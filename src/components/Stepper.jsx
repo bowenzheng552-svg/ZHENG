@@ -2,6 +2,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import "./Stepper.css";
 
+// Spring transitions for smooth physics-based motion
+const heightSpring = { type: "spring", stiffness: 300, damping: 26, mass: 0.8 };
+const slideSpring = { type: "spring", stiffness: 350, damping: 28, mass: 0.9 };
+const indicatorSpring = { type: "spring", stiffness: 500, damping: 22 };
+const connectorSpring = { type: "spring", stiffness: 400, damping: 25 };
+
 export default function Stepper({
   children,
   initialStep = 1,
@@ -101,21 +107,27 @@ export default function Stepper({
         <div className={`stepper-footer ${footerClassName}`}>
           <div className={`stepper-nav ${currentStep !== 1 ? "spread" : "end"}`}>
             {currentStep !== 1 && (
-              <button
+              <motion.button
                 onClick={handleBack}
                 className="stepper-back-btn"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 500, damping: 20 }}
                 {...backButtonProps}
               >
                 {backButtonText}
-              </button>
+              </motion.button>
             )}
-            <button
+            <motion.button
               onClick={isLastStep ? handleComplete : handleNext}
               className="stepper-next-btn"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 500, damping: 20 }}
               {...nextButtonProps}
             >
               {isLastStep ? "Complete" : nextButtonText}
-            </button>
+            </motion.button>
           </div>
         </div>
       )}
@@ -131,7 +143,7 @@ function StepContentWrapper({ isCompleted, currentStep, direction, children, cla
       className={className}
       style={{ position: "relative", overflow: "hidden" }}
       animate={{ height: isCompleted ? 0 : parentHeight }}
-      transition={{ type: "spring", duration: 0.4 }}
+      transition={heightSpring}
     >
       <AnimatePresence initial={false} mode="sync" custom={direction}>
         {!isCompleted && (
@@ -163,7 +175,7 @@ function SlideTransition({ children, direction, onHeightReady }) {
       initial="enter"
       animate="center"
       exit="exit"
-      transition={{ duration: 0.4 }}
+      transition={slideSpring}
       style={{ position: "absolute", left: 0, right: 0, top: 0 }}
     >
       {children}
@@ -212,10 +224,10 @@ function StepIndicator({ step, currentStep, onClickStep, disableStepIndicators }
       <motion.div
         variants={{
           inactive: { scale: 1, backgroundColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.3)" },
-          active: { scale: 1, backgroundColor: "#6C63FF", color: "#6C63FF" },
+          active: { scale: 1.05, backgroundColor: "#6C63FF", color: "#6C63FF" },
           complete: { scale: 1, backgroundColor: "#6C63FF", color: "#6C63FF" },
         }}
-        transition={{ duration: 0.3 }}
+        transition={indicatorSpring}
         className="stepper-indicator-inner"
       >
         {status === "complete" ? (
@@ -243,7 +255,7 @@ function StepConnector({ isComplete }) {
         variants={lineVariants}
         initial={false}
         animate={isComplete ? "complete" : "incomplete"}
-        transition={{ duration: 0.4 }}
+        transition={connectorSpring}
       />
     </div>
   );
@@ -255,7 +267,7 @@ function CheckIcon(props) {
       <motion.path
         initial={{ pathLength: 0 }}
         animate={{ pathLength: 1 }}
-        transition={{ delay: 0.1, type: "tween", ease: "easeOut", duration: 0.3 }}
+        transition={{ delay: 0.1, type: "spring", stiffness: 300, damping: 20 }}
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M5 13l4 4L19 7"

@@ -17,6 +17,9 @@ const advantageTags = [
   { label: "有声书10w+播放", icon: Headphones },
 ];
 
+// Spring for nav items stagger
+const navItemSpring = { type: "spring" as const, stiffness: 400, damping: 25 };
+
 export default function Hero() {
   return (
     <section className="h-screen p-4 md:p-6">
@@ -41,23 +44,33 @@ export default function Hero() {
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
 
-        {/* Navbar */}
+        {/* Navbar — Glassmorphism */}
         <nav className="absolute top-0 left-1/2 -translate-x-1/2 z-20">
-          <div className="bg-black/70 backdrop-blur-md rounded-b-2xl md:rounded-b-3xl px-4 py-2 md:px-8">
+          <motion.div
+            className="glass-panel rounded-b-2xl md:rounded-b-3xl px-4 py-2 md:px-8 glass-shimmer"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 300, damping: 24, mass: 0.8 }}
+          >
             <ul className="flex items-center gap-2 sm:gap-6 md:gap-12 lg:gap-14">
-              {navItems.map((item) => (
-                <li key={item.label}>
+              {navItems.map((item, i) => (
+                <motion.li
+                  key={item.label}
+                  initial={{ y: -10, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ ...navItemSpring, delay: 0.1 + i * 0.06 }}
+                >
                   <a
                     href={item.href}
                     style={{ color: "rgba(255, 255, 255, 0.7)" }}
-                    className="text-[9px] sm:text-xs md:text-sm hover:underline whitespace-nowrap transition-colors hover:text-white"
+                    className="text-[9px] sm:text-xs md:text-sm hover:underline whitespace-nowrap transition-colors hover:text-white interactive-cursor"
                   >
                     {item.label}
                   </a>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         </nav>
 
         {/* Hero Content */}
@@ -95,23 +108,29 @@ export default function Hero() {
                 播音与主持艺术 · 产品经理 · 内容创作者
               </motion.p>
 
-              {/* Advantage Tags */}
+              {/* Advantage Tags — Glassmorphism */}
               <motion.div
                 className="flex flex-wrap gap-2"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
               >
-                {advantageTags.map((tag) => {
+                {advantageTags.map((tag, i) => {
                   const Icon = tag.icon;
                   return (
-                    <span
+                    <motion.span
                       key={tag.label}
-                      className="inline-flex items-center gap-1.5 bg-white/10 text-white/80 px-3 py-1.5 rounded-full text-[10px] sm:text-xs border border-white/10 backdrop-blur-sm"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 20, delay: 0.7 + i * 0.08 }}
+                      whileHover={{ scale: 1.08, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="inline-flex items-center gap-1.5 glass-light rounded-full px-3 py-1.5 text-[10px] sm:text-xs interactive-cursor"
+                      style={{ color: "rgba(255, 255, 255, 0.8)" }}
                     >
                       <Icon size={12} className="opacity-70" />
                       {tag.label}
-                    </span>
+                    </motion.span>
                   );
                 })}
               </motion.div>
@@ -121,15 +140,22 @@ export default function Hero() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
               >
-                <a
+                <motion.a
                   href="#contact"
-                  className="group inline-flex items-center gap-2 bg-white/90 rounded-full px-6 py-2.5 text-black font-medium text-sm sm:text-base transition-all duration-300 hover:gap-3 hover:bg-white"
+                  className="group inline-flex items-center gap-2 bg-white/90 rounded-full px-6 py-2.5 text-black font-medium text-sm sm:text-base transition-all duration-300 hover:gap-3 hover:bg-white interactive-cursor"
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 20 }}
                 >
                   联系我
-                  <span className="inline-flex items-center justify-center bg-black rounded-full w-9 h-9 sm:w-10 sm:h-10 transition-transform duration-300 group-hover:scale-110">
+                  <motion.span
+                    className="inline-flex items-center justify-center bg-black rounded-full w-9 h-9 sm:w-10 sm:h-10"
+                    whileHover={{ rotate: 0, scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                  >
                     <ArrowRight className="text-white" size={18} />
-                  </span>
-                </a>
+                  </motion.span>
+                </motion.a>
               </motion.div>
             </div>
           </div>

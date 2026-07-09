@@ -30,6 +30,9 @@ const educationItems = [
   },
 ];
 
+const springCard = { type: "spring" as const, stiffness: 350, damping: 22 };
+const springStagger = (i: number) => ({ type: "spring" as const, stiffness: 300, damping: 20, delay: i * 0.12 });
+
 export default function Education() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
@@ -71,7 +74,7 @@ export default function Education() {
                   key={item.school}
                   initial={{ x: -20, opacity: 0 }}
                   animate={isInView ? { x: 0, opacity: 1 } : {}}
-                  transition={{ duration: 0.5, delay: index * 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  transition={springStagger(index)}
                   className="relative pl-14 md:pl-16"
                 >
                   {/* Timeline dot */}
@@ -79,12 +82,22 @@ export default function Education() {
                     <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary" />
                   </div>
 
-                  {/* Card */}
-                  <div className="bg-[#101010] rounded-2xl p-6 md:p-8">
+                  {/* Card — Glassmorphism */}
+                  <motion.div
+                    className="glass-card rounded-2xl p-6 md:p-8"
+                    whileHover={{ y: -4, scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
+                    transition={springCard}
+                  >
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="w-10 h-10 rounded-full bg-[#212121] flex items-center justify-center shrink-0">
+                      <motion.div
+                        className="w-10 h-10 rounded-full glass-light flex items-center justify-center shrink-0"
+                        initial={{ rotate: -10, scale: 0 }}
+                        animate={isInView ? { rotate: 0, scale: 1 } : {}}
+                        transition={{ type: "spring", stiffness: 400, damping: 15, delay: index * 0.12 + 0.15 }}
+                      >
                         <Icon className="text-primary" size={18} />
-                      </div>
+                      </motion.div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-3 mb-1 flex-wrap">
                           <h3 className="text-base sm:text-lg font-medium" style={{ color: "#E1E0CC" }}>
@@ -98,15 +111,19 @@ export default function Education() {
                     </div>
                     <div className="flex flex-wrap gap-2 mt-3">
                       {item.details.map((detail, i) => (
-                        <span
+                        <motion.span
                           key={i}
-                          className="text-xs text-gray-400 bg-[#212121] px-3 py-1 rounded-full"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                          transition={{ type: "spring", stiffness: 300, damping: 18, delay: index * 0.12 + 0.2 + i * 0.04 }}
+                          whileHover={{ scale: 1.06, y: -1 }}
+                          className="text-xs text-gray-400 glass-light px-3 py-1 rounded-full interactive-cursor"
                         >
                           {detail}
-                        </span>
+                        </motion.span>
                       ))}
                     </div>
-                  </div>
+                  </motion.div>
                 </motion.div>
               );
             })}

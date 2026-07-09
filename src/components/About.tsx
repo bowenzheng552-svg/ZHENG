@@ -31,7 +31,6 @@ const headingSegments = [
 export default function About() {
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
-  const isSectionInView = useInView(sectionRef, { once: true, margin: "-80px" });
   const isHeaderInView = useInView(headerRef, { once: true, margin: "-100px" });
 
   return (
@@ -44,7 +43,7 @@ export default function About() {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div className="bg-[#0a0a0a] rounded-2xl md:rounded-[2rem] max-w-6xl mx-auto px-6 md:px-16 lg:px-24 py-20 md:py-28 text-center relative overflow-hidden">
+      <div className="glass-panel rounded-2xl md:rounded-[2rem] max-w-6xl mx-auto px-6 md:px-16 lg:px-24 py-20 md:py-28 text-center relative overflow-hidden">
         {/* Subtle noise */}
         <div className="absolute inset-0 bg-noise opacity-[0.06] pointer-events-none" />
 
@@ -65,19 +64,27 @@ export default function About() {
             <WordsPullUpMultiStyle segments={headingSegments} />
           </div>
 
-          {/* Stats */}
+          {/* Stats — Glassmorphism cards */}
           <div ref={headerRef} className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16 max-w-2xl mx-auto">
             {stats.map((stat, i) => {
               const Icon = stat.icon;
               return (
                 <motion.div
                   key={stat.label}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={isHeaderInView ? { y: 0, opacity: 1 } : {}}
-                  transition={{ duration: 0.4, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-center"
+                  initial={{ y: 20, opacity: 0, scale: 0.9 }}
+                  animate={isHeaderInView ? { y: 0, opacity: 1, scale: 1 } : {}}
+                  transition={{ type: "spring", stiffness: 300, damping: 18, delay: i * 0.1 }}
+                  whileHover={{ y: -4, scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="glass-card rounded-xl p-4 text-center interactive-cursor"
                 >
-                  <Icon className="text-white/40 mx-auto mb-2" size={20} />
+                  <motion.div
+                    initial={{ rotate: -10, scale: 0 }}
+                    animate={isHeaderInView ? { rotate: 0, scale: 1 } : {}}
+                    transition={{ type: "spring", stiffness: 400, damping: 15, delay: i * 0.12 + 0.1 }}
+                  >
+                    <Icon className="text-white/40 mx-auto mb-2" size={20} />
+                  </motion.div>
                   <div className="text-xl sm:text-2xl font-medium text-white">{stat.value}</div>
                   <div className="text-white/40 text-xs mt-1">{stat.label}</div>
                 </motion.div>
@@ -85,18 +92,19 @@ export default function About() {
             })}
           </div>
 
-          {/* Word Cloud - horizontal layout */}
+          {/* Word Cloud — Glassmorphism chips with spring */}
           <div className="max-w-4xl mx-auto mb-12 md:mb-16">
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6">
               {wordCloud.map((word, i) => (
                 <motion.div
                   key={word.text}
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  className={`${word.size} ${word.weight} ${word.font} px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-white/10 hover:border-white/25 bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-300 cursor-default select-none`}
+                  transition={{ type: "spring", stiffness: 350, damping: 18, delay: i * 0.1 }}
+                  whileHover={{ scale: 1.08, y: -4 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`${word.size} ${word.weight} ${word.font} glass-card rounded-xl px-4 py-2 sm:px-5 sm:py-2.5 interactive-cursor select-none`}
                   style={{ color: "#FFFFFF" }}
                 >
                   {word.text}
