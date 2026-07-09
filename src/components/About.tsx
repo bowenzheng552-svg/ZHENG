@@ -19,7 +19,7 @@ const wordCloud = [
   { text: "丰富配音/剪辑经验", size: "text-base sm:text-lg lg:text-xl", weight: "", font: "" },
 ];
 
-const gradientClass = "bg-gradient-to-r from-amber-200 via-yellow-100 to-white bg-clip-text text-transparent";
+const gradientClass = "text-white";
 
 const headingSegments = [
   { text: "我是郑博文，", className: "font-semibold" },
@@ -81,7 +81,7 @@ export default function About() {
           </p>
 
           {/* Heading */}
-          <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl max-w-4xl mx-auto leading-[0.95] sm:leading-[0.9] mb-10 md:mb-14">
+          <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl max-w-4xl mx-auto leading-[0.95] sm:leading-[0.9] mb-10 md:mb-14 text-white">
             <WordsPullUpMultiStyle segments={headingSegments} />
           </div>
 
@@ -146,3 +146,4 @@ export default function About() {
     </motion.section>
   );
 }
+
