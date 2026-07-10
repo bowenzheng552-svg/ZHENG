@@ -5,49 +5,55 @@ import * as THREE from 'three';
 
 import { Canvas, useFrame } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
-import { degToRad } from 'three/src/math/MathUtils.js';
 
 import './Beams.css';
 
+const degToRad = (d) => d * (Math.PI / 180);
+
 function extendMaterial(BaseMaterial, cfg) {
-  const physical = THREE.ShaderLib.physical;
-  const { vertexShader: baseVert, fragmentShader: baseFrag, uniforms: baseUniforms } = physical;
-  const baseDefines = physical.defines ?? {};
+  try {
+    const physical = THREE.ShaderLib.physical;
+    const { vertexShader: baseVert, fragmentShader: baseFrag, uniforms: baseUniforms } = physical;
+    const baseDefines = physical.defines ?? {};
 
-  const uniforms = THREE.UniformsUtils.clone(baseUniforms);
+    const uniforms = THREE.UniformsUtils.clone(baseUniforms);
 
-  const defaults = new BaseMaterial(cfg.material || {});
+    const defaults = new BaseMaterial(cfg.material || {});
 
-  if (defaults.color) uniforms.diffuse.value = defaults.color;
-  if ('roughness' in defaults) uniforms.roughness.value = defaults.roughness;
-  if ('metalness' in defaults) uniforms.metalness.value = defaults.metalness;
-  if ('envMap' in defaults) uniforms.envMap.value = defaults.envMap;
-  if ('envMapIntensity' in defaults) uniforms.envMapIntensity.value = defaults.envMapIntensity;
+    if (defaults.color) uniforms.diffuse.value = defaults.color;
+    if ('roughness' in defaults) uniforms.roughness.value = defaults.roughness;
+    if ('metalness' in defaults) uniforms.metalness.value = defaults.metalness;
+    if ('envMap' in defaults) uniforms.envMap.value = defaults.envMap;
+    if ('envMapIntensity' in defaults) uniforms.envMapIntensity.value = defaults.envMapIntensity;
 
-  Object.entries(cfg.uniforms ?? {}).forEach(([key, u]) => {
-    uniforms[key] = u !== null && typeof u === 'object' && 'value' in u ? u : { value: u };
-  });
+    Object.entries(cfg.uniforms ?? {}).forEach(([key, u]) => {
+      uniforms[key] = u !== null && typeof u === 'object' && 'value' in u ? u : { value: u };
+    });
 
-  let vert = `${cfg.header}\n${cfg.vertexHeader ?? ''}\n${baseVert}`;
-  let frag = `${cfg.header}\n${cfg.fragmentHeader ?? ''}\n${baseFrag}`;
+    let vert = `${cfg.header}\n${cfg.vertexHeader ?? ''}\n${baseVert}`;
+    let frag = `${cfg.header}\n${cfg.fragmentHeader ?? ''}\n${baseFrag}`;
 
-  for (const [inc, code] of Object.entries(cfg.vertex ?? {})) {
-    vert = vert.replace(inc, `${inc}\n${code}`);
+    for (const [inc, code] of Object.entries(cfg.vertex ?? {})) {
+      vert = vert.replace(inc, `${inc}\n${code}`);
+    }
+    for (const [inc, code] of Object.entries(cfg.fragment ?? {})) {
+      frag = frag.replace(inc, `${inc}\n${code}`);
+    }
+
+    const mat = new THREE.ShaderMaterial({
+      defines: { ...baseDefines },
+      uniforms,
+      vertexShader: vert,
+      fragmentShader: frag,
+      lights: true,
+      fog: !!cfg.material?.fog
+    });
+
+    return mat;
+  } catch (e) {
+    console.error('extendMaterial failed:', e);
+    return new THREE.MeshStandardMaterial({ color: '#000000' });
   }
-  for (const [inc, code] of Object.entries(cfg.fragment ?? {})) {
-    frag = frag.replace(inc, `${inc}\n${code}`);
-  }
-
-  const mat = new THREE.ShaderMaterial({
-    defines: { ...baseDefines },
-    uniforms,
-    vertexShader: vert,
-    fragmentShader: frag,
-    lights: true,
-    fog: !!cfg.material?.fog
-  });
-
-  return mat;
 }
 
 const CanvasWrapper = ({ children }) => (
@@ -56,7 +62,7 @@ const CanvasWrapper = ({ children }) => (
   </Canvas>
 );
 
-const hexToNormalizedRGB = hex => {
+const hexToNormalizedRGB = (hex) => {
   const clean = hex.replace('#', '');
   const r = parseInt(clean.substring(0, 2), 16);
   const g = parseInt(clean.substring(2, 4), 16);
