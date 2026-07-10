@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { Building, Radio, Tv } from "lucide-react";
 import WordsPullUpMultiStyle from "./WordsPullUpMultiStyle";
 import Stepper, { Step } from "./Stepper";
+import Beams from "./Beams";
 
 const tabs = [
   {
@@ -124,7 +125,24 @@ export default function Experience() {
 
   return (
     <section id="experience" ref={sectionRef} className="min-h-screen bg-black relative py-24 md:py-32 px-4 md:px-8 overflow-hidden">
-      <div className="absolute inset-0 bg-noise opacity-[0.1] pointer-events-none" />
+      {/* Beams animated background */}
+      <div className="absolute inset-0 z-0">
+        <Beams
+          beamWidth={2.5}
+          beamHeight={18}
+          beamNumber={14}
+          lightColor="#DEDBC8"
+          speed={1.5}
+          noiseIntensity={1.5}
+          scale={0.25}
+          rotation={0}
+        />
+      </div>
+
+      {/* Dark overlay for content readability */}
+      <div className="absolute inset-0 bg-black/30 z-[1] pointer-events-none" />
+
+      <div className="absolute inset-0 bg-noise opacity-[0.1] z-[2] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}
@@ -200,6 +218,7 @@ export default function Experience() {
     </section>
   );
 }
+
 
 
 
